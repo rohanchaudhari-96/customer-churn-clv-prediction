@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>OmniInsight AI</title>
+  <link rel='stylesheet' href='{{ url_for("static", filename="style.css") }}'>
+  <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+</head>
+<body>
+<div class='container'>
+  <header class='hero card'>
+    <div>
+      <div class='kicker'>OmniInsight AI</div>
+      <h1>Multi-Industry Customer Intelligence & Decision System</h1>
+      <p>Train once, reuse saved models, inspect churn and value, detect business issues, and generate clear strategy recommendations.</p>
+    </div>
+  </header>
+
+  <section class='card workflow-card'>
+    <div class='section-top'><h2>Workflow</h2><span class='status'>Live</span></div>
+    <div class='workflow'>
+      <div class='pill'>Problem</div><div class='arrow'>→</div>
+      <div class='pill'>Data</div><div class='arrow'>→</div>
+      <div class='pill'>Cleaning</div><div class='arrow'>→</div>
+      <div class='pill'>Features</div><div class='arrow'>→</div>
+      <div class='pill'>Training</div><div class='arrow'>→</div>
+      <div class='pill'>Evaluation</div><div class='arrow'>→</div>
+      <div class='pill'>Analysis</div><div class='arrow'>→</div>
+      <div class='pill'>Strategy</div>
+    </div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 1 · Setup & Control</h2><span id='statusPill' class='status'>Waiting</span></div>
+    <div class='control-grid'>
+      <div class='field-block'>
+        <label>Industry</label>
+        <div class='segmented' id='industryButtons'>
+          <button data-ind='Telecom' class='active'>Telecom</button>
+          <button data-ind='Banking'>Banking</button>
+          <button data-ind='E-Commerce'>E-Commerce</button>
+        </div>
+      </div>
+      <div class='field-block'>
+        <label>Data Source</label>
+        <div class='segmented' id='modeButtons'>
+          <button data-mode='backend' class='active'>Backend Dataset</button>
+          <button data-mode='upload'>Upload Dataset</button>
+        </div>
+      </div>
+      <div id='uploadWrap' class='field-block hidden'>
+        <label>Upload Dataset</label>
+        <label class='file-drop'>
+          <input type='file' id='fileInput' accept='.csv,.xlsx,.xls'>
+          <span class='file-btn'>Choose File</span>
+          <span id='fileNameText' class='file-name'>No file selected</span>
+        </label>
+      </div>
+      <div class='button-row'>
+        <button id='validateBtn'>Validate</button>
+        <button id='trainBtn'>Train & Save</button>
+        <button id='analyzeBtn'>Analyze</button>
+        <button id='reportBtn'>Generate Report</button>
+      </div>
+    </div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 2 · Dataset Understanding</h2><span id='validPill' class='status'>No Data</span></div>
+    <div class='metric-grid' id='datasetMetrics'></div>
+    <div class='subcard'><h3>Auto-Detected Columns</h3><div id='schemaBox' class='tag-wrap'></div></div>
+    <div class='subcard'><h3>Detected Features</h3><div id='featureBox' class='tag-wrap'></div></div>
+    <div class='subcard note'>The system checks the dataset size, missing values, and whether it can automatically detect target, customer ID, and value logic.</div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 3 · Model Training Report</h2><span id='trainPill' class='status'>Not Trained</span></div>
+    <div id='trainSummary' class='tag-wrap'></div>
+    <div id='trainExplain' class='subcard'>Train once and the strongest churn model will be saved permanently for the selected industry.</div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 4 · Model Performance</h2><span class='status'>Ready</span></div>
+    <div class='metric-grid' id='perfGrid'></div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 5 · Prediction Summary</h2><span class='status'>Ready</span></div>
+    <div class='metric-grid' id='summaryGrid'></div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 6 · Individual Customer Explorer</h2><span class='status'>Search</span></div>
+    <div class='subcard explorer-tools'>
+      <div>
+        <strong>Customer Search</strong>
+        <div class='tool-note'>Choose what to search by, then type your query. Both search bars stay synced.</div>
+      </div>
+      <div class='segmented search-modes' id='searchModeButtons'>
+        <button data-search='row' class='active'>Row</button>
+        <button data-search='id'>Customer ID</button>
+        <button data-search='name'>Customer Name</button>
+      </div>
+      <div class='single-search'>
+        <div class='search-row unified-search-row'>
+          <input id='searchInput' placeholder='Search customers'>
+          <button id='searchBtn'>Search</button>
+        </div>
+      </div>
+    </div>
+    <div id='customerSpotlight' class='subcard'>Run analysis to load customer details.</div>
+    <div class='customer-browser'>
+      <div class='browser-head'>
+        <div>
+          Customer Browser
+          <span id='browserCount' class='browser-count'>0 records</span>
+        </div>
+      </div>
+      <div class='browser-note'>Default list follows the same row order as the loaded dataset. Use the one search box above to find by row, customer ID, or customer name. Clicking a row updates the spotlight above.</div>
+      <div class='browser-table-wrap'>
+        <table class='browser-table'>
+          <thead>
+            <tr>
+              <th>Row</th>
+              <th>Customer ID</th>
+              <th>Name</th>
+              <th>Actual</th>
+              <th>Predicted</th>
+              <th>Churn %</th>
+              <th>CLV</th>
+              <th>Segment</th>
+            </tr>
+          </thead>
+          <tbody id='customerRows'></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 7 · Why the Model Predicted This</h2><span class='status'>Drivers</span></div>
+    <div class='stack'>
+      <div id='driverList' class='subcard'></div>
+      <div class='subcard chart-card'><div class='chart-wrap'><canvas id='driverChart'></canvas></div><p class='chart-note'>Driver Strength: longer bar means that feature had more influence in churn prediction.</p></div>
+    </div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 8 · Detected Business Issues</h2><span class='status'>Detected</span></div>
+    <div id='issuesBox' class='stack'></div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 9 · Segment Intelligence</h2><span class='status'>Ready</span></div>
+    <div class='metric-grid' id='segmentGrid'></div>
+    <div class='subcard chart-card'><div class='chart-wrap'><canvas id='segmentChart'></canvas></div><p class='chart-note'>Segment Split: customers grouped by combined churn risk and predicted value.</p></div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 10 · AI Scenario Simulation</h2><span class='status'>Ready</span></div>
+    <div id='scenarioBox' class='stack'></div>
+  </section>
+
+  <section class='card'>
+    <div class='section-top'><h2>Step 11 · Final AI Strategy</h2><span class='status'>Ready</span></div>
+    <div id='recBox' class='subcard'></div>
+  </section>
+</div>
+<script src='{{ url_for("static", filename="script.js") }}'></script>
+</body>
+</html>

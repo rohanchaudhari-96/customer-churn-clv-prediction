@@ -1,0 +1,10 @@
+{
+  "churn_metrics": {
+    "accuracy": 0.776,
+    "precision": 0.559,
+    "recall": 0.749,
+    "f1": 0.64,
+    "roc_auc": 0.848,
+    "threshold": 0.314
+  }
+}

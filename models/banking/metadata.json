@@ -1,0 +1,33 @@
+{
+  "industry": "Banking",
+  "version": "v4",
+  "run_count": 4,
+  "rows": 10000,
+  "features": 11,
+  "training_time_sec": 4.528,
+  "best_churn_model": "GradientBoostingClassifier",
+  "schema": {
+    "target": "churn",
+    "customer_id": "customer_id",
+    "customer_name": null,
+    "formula": "CLV = 0.65\u00d7balance + 0.25\u00d7estimated_salary + 500\u00d7tenure + 1500\u00d7products_number + 2000\u00d7active_member"
+  },
+  "numeric_features": [
+    "customer_id",
+    "credit_score",
+    "age",
+    "tenure",
+    "balance",
+    "products_number",
+    "credit_card",
+    "active_member",
+    "estimated_salary"
+  ],
+  "categorical_features": [
+    "country",
+    "gender"
+  ],
+  "clv_formula": "CLV = 0.65\u00d7balance + 0.25\u00d7estimated_salary + 500\u00d7tenure + 1500\u00d7products_number + 2000\u00d7active_member",
+  "threshold": 0.285,
+  "train_test_split": "80/20"
+}

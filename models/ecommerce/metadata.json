@@ -1,0 +1,41 @@
+{
+  "industry": "E-Commerce",
+  "version": "v3",
+  "run_count": 3,
+  "rows": 5630,
+  "features": 19,
+  "training_time_sec": 2.464,
+  "best_churn_model": "RandomForestClassifier",
+  "schema": {
+    "target": "Churn",
+    "customer_id": "CustomerID",
+    "customer_name": null,
+    "formula": "CLV = 18\u00d7OrderCount + 1.2\u00d7CashbackAmount + 4\u00d7CouponUsed + 2.5\u00d7OrderAmountHikeFromlastYear \u2212 2\u00d7DaySinceLastOrder + 10\u00d7SatisfactionScore"
+  },
+  "numeric_features": [
+    "CustomerID",
+    "Tenure",
+    "CityTier",
+    "WarehouseToHome",
+    "HourSpendOnApp",
+    "NumberOfDeviceRegistered",
+    "SatisfactionScore",
+    "NumberOfAddress",
+    "Complain",
+    "OrderAmountHikeFromlastYear",
+    "CouponUsed",
+    "OrderCount",
+    "DaySinceLastOrder",
+    "CashbackAmount"
+  ],
+  "categorical_features": [
+    "PreferredLoginDevice",
+    "PreferredPaymentMode",
+    "Gender",
+    "PreferedOrderCat",
+    "MaritalStatus"
+  ],
+  "clv_formula": "CLV = 18\u00d7OrderCount + 1.2\u00d7CashbackAmount + 4\u00d7CouponUsed + 2.5\u00d7OrderAmountHikeFromlastYear \u2212 2\u00d7DaySinceLastOrder + 10\u00d7SatisfactionScore",
+  "threshold": 0.436,
+  "train_test_split": "80/20"
+}

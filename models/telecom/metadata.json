@@ -1,0 +1,42 @@
+{
+  "industry": "Telecom",
+  "version": "v10",
+  "run_count": 10,
+  "rows": 7044,
+  "features": 20,
+  "training_time_sec": 3.398,
+  "best_churn_model": "GradientBoostingClassifier",
+  "schema": {
+    "target": "Churn",
+    "customer_id": "customerID",
+    "customer_name": null,
+    "formula": "CLV = TotalCharges (fallback: MonthlyCharges \u00d7 max(tenure,1))"
+  },
+  "numeric_features": [
+    "SeniorCitizen",
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges"
+  ],
+  "categorical_features": [
+    "customerID",
+    "gender",
+    "Partner",
+    "Dependents",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod"
+  ],
+  "clv_formula": "CLV = TotalCharges (fallback: MonthlyCharges \u00d7 max(tenure,1))",
+  "threshold": 0.314,
+  "train_test_split": "80/20"
+}
